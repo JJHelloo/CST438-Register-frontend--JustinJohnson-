@@ -5,13 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import TextField from '@mui/material/TextField';
 
 class AddStudent extends Component {
     constructor(props) {
         super(props);
-        this.state = {open: false, name:'', email:''};
+        this.state = {open: false, student:{}};
     };
 
     handleClickOpen = () => {
@@ -21,17 +20,21 @@ class AddStudent extends Component {
       handleClose = () => {
         this.setState( {open:false} );
       };
-  
+      // this.setState({course:{course_id: event.target.value}})
       handleChangeName = (event) => {
-        this.setState({name: event.target.value});
+        this.setState({student:{name: event.target.value}});
+        // this.setState(prevState => ({student:{name: event.target.value}}));
+        console.log("Name " + this.state.student.name);
       }
       handleChangeEmail = (event) => {
-        this.setState({email: event.target.value});
+        this.setState({student:{email: event.target.value}});
+        // this.setState(prevState => ({student:{email: event.target.value}}));
+        console.log("Email " +this.state.student.email);
+        
       }
-  
-    // Save course and close modal form
+    // Save student and close modal form
       handleAdd = () => {
-         this.props.addStudent(this.state.name, this.state.email);
+         this.props.addStudent(this.state.student);
          this.handleClose();
       }
 

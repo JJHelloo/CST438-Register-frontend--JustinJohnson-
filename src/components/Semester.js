@@ -11,7 +11,6 @@ import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import {DataGrid} from '@mui/x-data-grid';
 import {SEMESTER_LIST} from '../constants.js'
-import ButtonGroup from '@mui/material/ButtonGroup';
 import AddStudent from './AddStudent';
 
 // user selects from a list of  (year, semester) values
@@ -26,48 +25,16 @@ class Semester extends Component {
     this.setState({selected: event.target.value});
   }
 
-      fetchStudent = () => {
-      console.log("StudentAdded.fetchStudent");
-      const token = Cookies.get('XSRF-TOKEN');
-      
-      fetch(`${SERVER_URL}/student?name=${this.props.location.name}&email=${this.props.location.email}`, 
-        {  
-          method: 'GET', 
-          headers: { 'X-XSRF-TOKEN': token }
-        } )
-      .then((response) => {
-        console.log("FETCH RESP:"+response);
-        return response.json();}) 
-      .then((responseData) => { 
-        // do a sanity check on response
-        if (Array.isArray(responseData.name)) {
-          this.setState({ 
-            name: responseData.name,
-            email: responseData.email,
-          });
-        } else {
-          toast.error("Fetch failed.", {
-            position: toast.POSITION.BOTTOM_LEFT
-          });
-        }        
-      })
-      .catch(err => {
-        toast.error("Fetch failed.", {
-            position: toast.POSITION.BOTTOM_LEFT
-          });
-          console.error(err); 
-      })
-    }
       // Add student
-      addStudent = (name, email) => {
+      addStudent = (student) => {
         const token = Cookies.get('XSRF-TOKEN');
      
-        fetch(`${SERVER_URL}/student/new/?name=${this.props.location.name}&email=${this.props.location.email}`,
+        fetch(`${SERVER_URL}/student/new`,
           { 
             method: 'POST', 
             headers: { 'Content-Type': 'application/json',
                        'X-XSRF-TOKEN': token  }, 
-            body: JSON.stringify(name,email)
+            body: JSON.stringify(student)
           })
         .then(res => {
             if (res.ok) {
