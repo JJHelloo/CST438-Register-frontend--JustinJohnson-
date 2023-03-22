@@ -11,6 +11,7 @@ class AddStudent extends Component {
     constructor(props) {
         super(props);
         this.state = {open: false, student:{}};
+        
     };
 
     handleClickOpen = () => {
@@ -20,25 +21,18 @@ class AddStudent extends Component {
       handleClose = () => {
         this.setState( {open:false} );
       };
-      // this.setState({course:{course_id: event.target.value}})
+
       handleChangeName = (event) => {
-        this.setState({student:{name: event.target.value}});
-        // this.setState(prevState => ({student:{name: event.target.value}}));
-        console.log("Name " + this.state.student.name);
+        this.setState(prevState => ({student:{name: event.target.value, email: prevState.student.email}}));
       }
       handleChangeEmail = (event) => {
-        this.setState({student:{email: event.target.value}});
-        // this.setState(prevState => ({student:{email: event.target.value}}));
-        console.log("Email " +this.state.student.email);
-        
+        this.setState(prevState => ({student:{name: prevState.student.name, email: event.target.value}}));
       }
     // Save student and close modal form
       handleAdd = () => {
          this.props.addStudent(this.state.student);
          this.handleClose();
       }
-
-      
 
     render()  { 
         return (
