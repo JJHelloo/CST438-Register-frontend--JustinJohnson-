@@ -17,9 +17,9 @@ import AddStudent from './AddStudent';
 class Semester extends Component {
     constructor(props) {
       super(props);
-      this.state = {selected: SEMESTER_LIST.length-1 };
+      this.state = {selected: SEMESTER_LIST.length-1,students:[] };
     }
- 
+    
    onRadioClick = (event) => {
     console.log("Semester.onRadioClick "+JSON.stringify(event.target.value));
     this.setState({selected: event.target.value});
@@ -28,8 +28,10 @@ class Semester extends Component {
       // Add student
       addStudent = (student) => {
         const token = Cookies.get('XSRF-TOKEN');
+     console.log(JSON.stringify(student.name));
+     console.log(JSON.stringify(student.email));
      
-        fetch(`${SERVER_URL}/student/new`,
+        fetch(`${SERVER_URL}/student/new/?name=${JSON.stringify(student.name)}&email=${JSON.stringify(student.email)}`,
           { 
             method: 'POST', 
             headers: { 'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ class Semester extends Component {
               toast.success("Student successfully added", {
                   position: toast.POSITION.BOTTOM_LEFT
               });
-              this.fetchStudent();
+              // this.fetchStudent();
             } else {
               toast.error("Error when adding", {
                   position: toast.POSITION.BOTTOM_LEFT
