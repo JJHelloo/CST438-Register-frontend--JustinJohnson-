@@ -11,6 +11,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AddCourse from './AddCourse';
+import AddStudent from './AddStudent';
 
 // NOTE:  for OAuth security, http request must have
 //   credentials: 'include' 
@@ -124,6 +125,38 @@ class SchedList extends Component {
         console.error(err);
     })
   } 
+
+    // Add student
+    AddStudent = (name, email) => {
+      const token = Cookies.get('XSRF-TOKEN');
+   
+      fetch(`${SERVER_URL}/student/?name=${name}&email=${email}`,
+        { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json',
+                     'X-XSRF-TOKEN': token  }, 
+          body: JSON.stringify(name, email)
+        })
+      .then(res => {
+          if (res.ok) {
+            toast.success("student successfully added", {
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            this.fetchCourses();
+          } else {
+            toast.error("Error when adding", {
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            console.error('Post http status =' + res.status);
+          }})
+      .catch(err => {
+        toast.error("Error when adding", {
+              position: toast.POSITION.BOTTOM_LEFT
+          });
+          console.error(err);
+      })
+    } 
+  
 
   render() {
      const columns = [
