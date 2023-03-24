@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component }  from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,11 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+// import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class AddStudent extends Component {
     constructor(props) {
         super(props);
-        this.state = {open: false, student:{}};
+        this.state = {open: false, student:{}, message:""};
         
     };
 
@@ -19,9 +21,9 @@ class AddStudent extends Component {
       };
   
       handleClose = () => {
-        this.setState( {open:false} );
+        this.setState( {open:false, student:{message:""} } );
       };
-
+  
       handleChangeName = (event) => {
         this.setState(prevState => ({student:{name: event.target.value, email: prevState.student.email}}));
       }
@@ -31,9 +33,10 @@ class AddStudent extends Component {
     // Save student and close modal form
       handleAdd = () => {
          this.props.addStudent(this.state.student);
-         this.handleClose();
+        //  this.handleClose();
       }
-
+    
+    
     render()  { 
         return (
             <div>
@@ -43,6 +46,7 @@ class AddStudent extends Component {
               <Dialog open={this.state.open} onClose={this.handleClose}>
                   <DialogTitle>Add Student</DialogTitle>
                   <DialogContent  style={{paddingTop: 20}} >
+                  <h3> {this.state.message} </h3>
                     <TextField autoFocus fullWidth label="Student Name" name="name" onChange={this.handleChangeName}  /> 
                     <br></br><br></br>
                     <TextField autoFocus fullWidth label="Student Email" name="email" onChange={this.handleChangeEmail}  />
@@ -56,6 +60,7 @@ class AddStudent extends Component {
         ); 
       }
   }
+
   
   // required property: addstudent is a function to call to perform the Add action
   AddStudent.propTypes = {

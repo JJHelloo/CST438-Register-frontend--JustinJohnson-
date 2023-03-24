@@ -123,7 +123,7 @@ class SchedList extends Component {
         });
         console.error(err);
     })
-  } 
+  }
   
 
   render() {
