@@ -25,38 +25,40 @@ class Semester extends Component {
     this.setState({selected: event.target.value});
   }
 
-      // Add student
-      addStudent = (student) => {
-        const token = Cookies.get('XSRF-TOKEN');
-     console.log(JSON.stringify(student.name));
-     console.log(JSON.stringify(student.email));
-     
-        fetch(`${SERVER_URL}/student/new/?name=${JSON.stringify(student.name)}&email=${JSON.stringify(student.email)}`,
-          { 
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json',
-                       'X-XSRF-TOKEN': token  }, 
-            body: JSON.stringify(student)
-          })
-        .then(res => {
-            if (res.ok) {
-              toast.success("Student successfully added", {
-                  position: toast.POSITION.BOTTOM_LEFT
-              });
-              // this.fetchStudent();
-            } else {
+    //   // Add student
+          // Add student
+          addStudent = (student) => {
+            const token = Cookies.get('XSRF-TOKEN');
+            console.log(JSON.stringify(student.name));
+            console.log(JSON.stringify(student.email));
+         
+            fetch(`${SERVER_URL}/student/new/?name=${JSON.stringify(student.name)}&email=${JSON.stringify(student.email)}`,
+              { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json',
+                           'X-XSRF-TOKEN': token  }, 
+                body: JSON.stringify(student)
+              })
+            .then(res => {
+                if (res.ok) {
+                  toast.success("Student successfully added", {
+                      position: toast.POSITION.BOTTOM_LEFT
+                  });
+                //   console.log('ID =' + res.id );
+                  // this.fetchStudent();
+                } else {
+                  toast.error("Error when adding", {
+                      position: toast.POSITION.BOTTOM_LEFT
+                  });
+                  console.error('Post http status =' + res.status );
+                }})
+            .catch(err => {
               toast.error("Error when adding", {
-                  position: toast.POSITION.BOTTOM_LEFT
-              });
-              console.error('Post http status =' + res.status);
-            }})
-        .catch(err => {
-          toast.error("Error when adding", {
-                position: toast.POSITION.BOTTOM_LEFT
-            });
-            console.error(err);
-        })
-      }
+                    position: toast.POSITION.BOTTOM_LEFT
+                });
+                console.error(err);
+            })
+          }
   
   render() {    
       const icolumns = [
@@ -104,6 +106,7 @@ class Semester extends Component {
                 <AddStudent addStudent={this.addStudent}  />
               </Button>
           </div>
+          <ToastContainer autoClose={1500} /> 
       </div>
     )
   }
