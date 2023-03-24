@@ -25,14 +25,14 @@ class Semester extends Component {
     this.setState({selected: event.target.value});
   }
 
-    //   // Add student
+    //   will be reomved once admin page is finished 
           // Add student
           addStudent = (student) => {
             const token = Cookies.get('XSRF-TOKEN');
             console.log(JSON.stringify(student.name));
             console.log(JSON.stringify(student.email));
          
-            fetch(`${SERVER_URL}/student/new/?name=${JSON.stringify(student.name)}&email=${JSON.stringify(student.email)}`,
+            fetch(`${SERVER_URL}/student/new/?name=${student.name}&email=${student.email}`,
               { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json',
