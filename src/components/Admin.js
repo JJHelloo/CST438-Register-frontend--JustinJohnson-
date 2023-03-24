@@ -14,8 +14,6 @@ import Button from '@mui/material/Button';
 import AddStudent from './AddStudent';
 
 
-
-
 class Admin extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +26,7 @@ class Admin extends Component {
             console.log(JSON.stringify(student.name));
             console.log(JSON.stringify(student.email));
          
-            fetch(`${SERVER_URL}/student/new/?name=${JSON.stringify(student.name)}&email=${JSON.stringify(student.email)}`,
+            fetch(`${SERVER_URL}/student/new/?name=${student.name}&email=${student.email}`,
               { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json',
